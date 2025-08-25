@@ -72,7 +72,7 @@ output "subnet_ids" {
 - Steps:
   - Run `terraform init`
   - Run `terraform plan` and verify no errors
-  - Run `terraform apply` and verify VPC in AWS console
+  - Run `terraform apply` and verify Subnets in AWS console
 - Result: Subnets created successfully with inputs as above.
 - Next: Proceed to test the Internet Gateway module using outputs from VPC module.
 
