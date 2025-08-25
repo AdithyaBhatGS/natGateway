@@ -43,6 +43,7 @@ module "vpc" {
 output "vpc_id" {
     value = module.vpc.vpc_id
 }
+```
 
 ## Testing
 
@@ -61,5 +62,3 @@ output "vpc_id" {
 
 - Ensure CIDR block is a valid network base address (e.g., `10.0.0.0/16`).
 - This module requires AWS provider configured.
-
-```
