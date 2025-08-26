@@ -55,4 +55,4 @@ output "igw_id" {
   - Run `terraform plan` and verify no errors
   - Run `terraform apply` and verify IGW in AWS console
 - Result: IGW created successfully with inputs as above.
-- Next: Proceed to test the Route tables module using outputs from VPC module, Subnets module and IGW module.
+- Next: Proceed to test the NAT Gateway module using outputs from VPC module, Subnets module and IGW module.
