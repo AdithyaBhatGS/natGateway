@@ -67,7 +67,7 @@ This project is organized into two main folders:
 
   - .gitignore
 
-  - REAMDME.md
+  - README.md
 
 ## How to Run
 
