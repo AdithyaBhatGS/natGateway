@@ -41,33 +41,33 @@ This project is organized into two main folders:
       - [outputs.tf](./modules/security_groups/outputs.tf)
       - [README.md](./modules/security_groups/README.md)
       - [variables.tf](./modules/security_groups/variables.tf)
-    - ssm_endpoints/
-      - main.tf
-      - outputs.tf
-      - README.md
-      - variables.tf
-    - subnet/
-      - main.tf
-      - outputs.tf
-      - README.md
-      - variables.tf
-    - vpc/
-      - main.tf
-      - outputs.tf
-      - README.md
-      - variables.tf
+    - [ssm_endpoints/](./modules/ssm_endpoints/)
+      - [main.tf](./modules/ssm_endpoints/main.tf)
+      - [outputs.tf](./modules/ssm_endpoints/outputs.tf)
+      - [README.md](./modules/ssm_endpoints/README.md)
+      - [variables.tf](./modules/ssm_endpoints/variables.tf)
+    - [subnet/](./modules/subnet/)
+      - [main.tf](./modules/subnet/main.tf)
+      - [outputs.tf](./modules/subnet/outputs.tf)
+      - [README.md](./modules/subnet/README.md)
+      - [variables.tf](./modules/subnet/variables.tf)
+    - [vpc/](./modules/vpc/)
+      - [main.tf](./modules/vpc/main.tf)
+      - [outputs.tf](./modules/vpc/outputs.tf)
+      - [README.md](./modules/vpc/README.md)
+      - [variables.tf](./modules/vpc/variables.tf)
 
-  - test/
+  - [test/](./test/)
 
-    - .terraform.lock.hcl
-    - main.tf
-    - outputs.tf
-    - variables.tf
-    - README.md
+    - [.terraform.lock.hcl](./test/.terraform.lock.hcl)
+    - [main.tf](./test/main.tf)
+    - [outputs.tf](./test/outputs.tf)
+    - [variables.tf](./test/variables.tf)
+    - [README.md](./test/README.md)
 
-  - .gitignore
+  - [.gitignore](./.gitignore)
 
-  - README.md
+  - [README.md](./README.md)
 
 ## How to Run
 
