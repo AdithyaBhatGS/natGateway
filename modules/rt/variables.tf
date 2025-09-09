@@ -9,7 +9,7 @@ variable "route_tables" {
 }
 
 variable "environment_tag" {
-  type        = optional(string)
+  type        = string
   description = "Represents the Environment attribute under tag attribute in which the infrastructure is being deployed"
 }
 
