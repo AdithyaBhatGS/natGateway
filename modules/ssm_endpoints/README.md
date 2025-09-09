@@ -12,7 +12,7 @@ This Terraform module creates the SSM Endpoint.Here we would be creating 3 endpo
 | --------------- | ----------------------------------------------------------------------------------- | ----------- | ------- | -------- |
 | vpc_id          | Represents the VPC ID in which the Endpoints are deployed                           | string      | n/a     | yes      |
 | endpoint_config | Represents the object containing service name, subnet ids, security groups and tags | map(object) | n/a     | yes      |
-| region_name     | Represents the region name                                                          | map(object) | n/a     | yes      |
+| region_name     | Represents the region name                                                          | string      | n/a     | yes      |
 
 ---
 
