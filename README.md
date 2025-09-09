@@ -1,11 +1,40 @@
-# Project Name
+# NAT Gateway Project
+
+A simple project to setup the NAT Gateway using terraform.
+
+We use SSM Endpoints to login to the Private Instance and try to access the internet through the NAT Gateway
+
+Using SSM Endpoints reduces the port exposure
+
+## Steps to achieve this:
+
+1. Create a VPC
+2. Create 2 Subnets
+   - Public Subnet( for NAT Gateway)
+   - Private Subnet( for EC2 Instance)
+3. Create an Internet Gateway
+4. Create a NAT Gateway
+5. Create 2 Route Tables
+   - One for the public subnet
+   - Another for the private subnet
+6. Create the security groups
+   - One for EC2 instance
+   - Another for the SSM Endpoints
+7. Create 3 SSM Endpoints
+   - ssm
+   - ec2messages
+   - ssmmessages
+8. Create an IAM Role, attach the trust entity to establish the trust relationship, add the managed policy named **_AmazonSSMManagedInstanceCore_**, create an instance profile
+9. Finally create the EC2 module for testing the working of the NAT Gateway
+
+## Project Organization
 
 This project is organized into two main folders:
 
 - **modules/** → contains all the modules.
 - **test/** → modules are called and tested in this folder.
 
-# Project Structure
+## Project Structure
 
 - [natGateway/](./)
 
@@ -82,3 +111,29 @@ This project is organized into two main folders:
    ```bash
    terraform apply
    ```
+
+## How to test the working of NAT Gateway:
+
+1. Login to the AWS Management Console
+2. Login to the EC2 instance using the SSM Access
+   - Since we are using the SSM we do not need keys for login
+3. Once logged into the instance:
+
+   - Test the internet access:
+
+     - ```
+       ping -c 4 google.com
+       ```
+
+   - Update the package manager:
+
+     - ```
+       sudo apt-get update
+       ```
+
+   - Check Public IP:
+
+     - ```
+       curl http://checkip.amazonaws.com
+       ```
+     - The public IP must match with that of the Elastic IP that you have attached to your NAT Gateway
