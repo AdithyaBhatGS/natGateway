@@ -7,7 +7,7 @@ This project is organized into two main folders:
 
 # Project Structure
 
-- [natGateway/](./natGateway)
+- [natGateway/](./)
 
   - [modules/](./modules/)
 
@@ -26,7 +26,7 @@ This project is organized into two main folders:
       - [outputs.tf](./modules/igw/output.tf)
       - [README.md](./modules/igw/README.md)
       - [variables.tf](./modules/igw/variables.tf)
-    - [nat_gateway/]
+    - [nat_gateway/](./modules/nat_gateway/)
       - [main.tf](./modules/nat_gateway/main.tf)
       - [outputs.tf](./modules/nat_gateway/outputs.tf)
       - [README.md](./modules/nat_gateway/README.md)
