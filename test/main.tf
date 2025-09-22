@@ -1,3 +1,13 @@
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state-12912"
+    key            = "nat_gateway_state/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-state-lock-12912"
+    encrypt        = true
+  }
+}
+
 provider "aws" {
   region                   = var.region
   shared_credentials_files = ["C:/Users/adithya.bhat/.aws/credentials"]
@@ -151,7 +161,7 @@ module "ec2" {
   subnet_id            = local.private_subnet_id
   security_groups      = [module.security_groups.security_group_ids[var.key_for_sg]]
   instance_type        = var.instance_type
-  iam_instance_profile = module.iam.aws_ec2_instance_profile_arn
+  iam_instance_profile = module.iam.aws_ec2_instance_profile_name
   tags                 = var.ec2_instance_tags
 }
 

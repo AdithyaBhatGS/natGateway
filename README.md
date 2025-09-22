@@ -136,4 +136,8 @@ This project is organized into two main folders:
      - ```
        curl http://checkip.amazonaws.com
        ```
+     - curl - used for making web requests
+
+     - http://checkip.amazonaws.com - A web service by aws that sends back the public IP of your instance
+
      - The public IP must match with that of the Elastic IP that you have attached to your NAT Gateway

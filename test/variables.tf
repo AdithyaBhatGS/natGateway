@@ -3,6 +3,7 @@ variable "region" {
   default = "us-east-1"
 }
 
+
 variable "vpc_cidr_block" {
   type        = string
   description = "Specifies the cidr_block of the VPC resource"
@@ -130,16 +131,6 @@ variable "security_grp_private_subnet_ssm_initiator" {
   description = "Represents the Security Group Private Subnet SSM Initiator Name for HTTPS outbound"
 }
 
-# variable "endpoint_config" {
-#   type = map(object({
-#     service_name     = string
-#     subnet_ids       = list(string)
-#     security_grp_ids = list(string)
-#     tags             = map(string)
-#   }))
-
-#   description = "Contains the list of subnet IDs, security group IDs and the service name"
-# }
 
 variable "endpoint_config_keys" {
   type        = list(string)
