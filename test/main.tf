@@ -10,7 +10,7 @@ terraform {
 
 provider "aws" {
   region                   = var.region
-  shared_credentials_files = ["C:/Users/adithya.bhat/.aws/credentials"]
+  shared_credentials_files = ["C:/Users/adith/.aws/credentials"]
 }
 
 locals {
@@ -76,16 +76,16 @@ locals {
 }
 
 
-locals {
-  endpoint_config = {
-    for service in var.endpoint_config_keys : service => {
-      service_name     = service
-      subnet_ids       = tolist([(local.private_subnet_id)])
-      security_grp_ids = [module.security_groups.security_group_ids[var.security_grp_ssm]]
-      tags             = merge(var.environment_tag, { Name = service })
-    }
-  }
-}
+# locals {
+# endpoint_config = {
+# for service in var.endpoint_config_keys : service => {
+# service_name     = service
+# subnet_ids       = tolist([(local.private_subnet_id)])
+# security_grp_ids = [module.security_groups.security_group_ids[var.security_grp_ssm]]
+# tags             = merge(var.environment_tag, { Name = service })
+# }
+# }
+# }
 
 # Calling the VPC Module
 module "vpc" {
@@ -138,13 +138,6 @@ module "security_groups" {
   ingress_rules = local.ingress_rules
   egress_rules  = local.egress_rules
   # depends_on    = [module.igw, module.nat_gateway]
-}
-
-module "ssm_endpoints" {
-  source          = "../modules/ssm_endpoints"
-  vpc_id          = module.vpc.vpc_id
-  endpoint_config = local.endpoint_config
-  region_name     = var.region
 }
 
 module "iam" {
