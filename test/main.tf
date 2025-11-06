@@ -76,16 +76,6 @@ locals {
 }
 
 
-# locals {
-# endpoint_config = {
-# for service in var.endpoint_config_keys : service => {
-# service_name     = service
-# subnet_ids       = tolist([(local.private_subnet_id)])
-# security_grp_ids = [module.security_groups.security_group_ids[var.security_grp_ssm]]
-# tags             = merge(var.environment_tag, { Name = service })
-# }
-# }
-# }
 
 # Calling the VPC Module
 module "vpc" {
