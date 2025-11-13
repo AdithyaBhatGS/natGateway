@@ -27,8 +27,8 @@ resource "aws_iam_role" "ec2_ssm_role" {
 
 # Outputting the IAM Role name and ARN
 locals {
-  ssm_role_name = try(data.aws_iam_role.existing.name, aws_iam_role.ssm_role[0].name)
-  ssm_role_arn  = try(data.aws_iam_role.existing.arn, aws_iam_role.ssm_role[0].arn)
+  ssm_role_name = try(data.aws_iam_role.existing.name, aws_iam_role.ec2_ssm_role[0].name)
+  ssm_role_arn  = try(data.aws_iam_role.existing.arn, aws_iam_role.ec2_ssm_role[0].arn)
 }
 
 # Attaching the managed policy for the IAM Role
