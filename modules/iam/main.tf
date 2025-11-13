@@ -51,6 +51,6 @@ resource "aws_iam_instance_profile" "ec2_instance_profile" {
 }
 
 locals {
-  ssm_instance_profile_name = try(data.aws_iam_instance_profile.existing_instance_profile.name, aws_iam_instance_profile.ssm_profile[0].name)
-  ssm_instance_profile_arn  = try(data.aws_iam_instance_profile.existing_instance_profile.arn, aws_iam_instance_profile.ssm_profile[0].arn)
+  ssm_instance_profile_name = try(data.aws_iam_instance_profile.existing_instance_profile.name, aws_iam_instance_profile.ec2_instance_profile[0].name)
+  ssm_instance_profile_arn  = try(data.aws_iam_instance_profile.existing_instance_profile.arn, aws_iam_instance_profile.ec2_instance_profile[0].arn)
 }
