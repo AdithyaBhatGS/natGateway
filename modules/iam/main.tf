@@ -37,9 +37,20 @@ resource "aws_iam_role_policy_attachment" "ssm_managed_policy" {
   policy_arn = var.ssm_policy_arn
 }
 
+data "aws_iam_instance_profile" "existing_instance_profile" {
+  name = var.aws_iam_instance_profile
+}
+
+
 # Creating an Instance profile for the EC2 resource
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
+  count = try(data.aws_iam_instance_profile.existing_instance_profile.name, null) == null ? 1 : 0
+
   name = var.aws_iam_instance_profile
   role = local.ssm_role_name
 }
 
+locals {
+  ssm_instance_profile_name = try(data.aws_iam_instance_profile.existing.name, aws_iam_instance_profile.ssm_profile[0].name)
+  ssm_instance_profile_arn  = try(data.aws_iam_instance_profile.existing.arn, aws_iam_instance_profile.ssm_profile[0].arn)
+}
