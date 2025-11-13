@@ -10,9 +10,11 @@ pipeline {
     }
     // Defining the stages of the pipeline
     stages {
+        // Setup stage to initialize Terraform and validate configuration
         stage('Setup') {
             steps {
                 script {
+                    // Using credentials for AWS and Terraform variable file
                     withCredentials([
                         usernamePassword(credentialsId: 'AWS_CREDENTIALS', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY'),
                         file(credentialsId: 'TFVARS_FILE', variable: 'TFVARS_PATH')
