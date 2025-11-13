@@ -40,6 +40,6 @@ resource "aws_iam_role_policy_attachment" "ssm_managed_policy" {
 # Creating an Instance profile for the EC2 resource
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
   name = var.aws_iam_instance_profile
-  role = aws_iam_role.ec2_ssm_role.name
+  role = local.ssm_role_name
 }
 
