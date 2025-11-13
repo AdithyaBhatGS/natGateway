@@ -1,25 +1,24 @@
 pipeline {
     agent any
-    // Adding the parameter to choose the Terraform action
+
     parameters {
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action to perform')
     }
-    // Setting up AWS region environment variable
+
     environment {
         AWS_DEFAULT_REGION = "us-east-1"
     }
-    // Defining the stages of the pipeline
+
     stages {
-        // Setup stage to initialize Terraform and validate configuration
-        stage('Setup') {
+        stage('Setup & Validate') {
             steps {
                 script {
-                    // Using credentials for AWS and Terraform variable file
                     withCredentials([
-                        usernamePassword(credentialsId: 'AWS_CREDENTIALS', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY'),
+                        [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS'],
                         file(credentialsId: 'TFVARS_FILE', variable: 'TFVARS_PATH')
                     ]) {
                         sh '''
+                            echo "=== Terraform Init, Fmt, Validate ==="
                             terraform init -input=false
                             terraform fmt -check
                             terraform validate
@@ -32,14 +31,19 @@ pipeline {
         stage('Terraform Plan / Apply / Destroy') {
             steps {
                 script {
-                    if (params.ACTION == 'plan') {
-                        sh 'terraform plan -var-file=$TFVARS_PATH'
-                    } else if (params.ACTION == 'apply') {
-                        input(message: "Do you want to apply these changes?", ok: "Apply")
-                        sh 'terraform apply -auto-approve -var-file=$TFVARS_PATH'
-                    } else if (params.ACTION == 'destroy') {
-                        input(message: "Are you sure you want to destroy the infrastructure?", ok: "Destroy")
-                        sh 'terraform destroy -auto-approve -var-file=$TFVARS_PATH'
+                    withCredentials([
+                        [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS'],
+                        file(credentialsId: 'TFVARS_FILE', variable: 'TFVARS_PATH')
+                    ]) {
+                        if (params.ACTION == 'plan') {
+                            sh 'terraform plan -var-file=$TFVARS_PATH'
+                        } else if (params.ACTION == 'apply') {
+                            input(message: "Do you want to apply these changes?", ok: "Apply")
+                            sh 'terraform apply -auto-approve -var-file=$TFVARS_PATH'
+                        } else if (params.ACTION == 'destroy') {
+                            input(message: "Are you sure you want to destroy the infrastructure?", ok: "Destroy")
+                            sh 'terraform destroy -auto-approve -var-file=$TFVARS_PATH'
+                        }
                     }
                 }
             }
