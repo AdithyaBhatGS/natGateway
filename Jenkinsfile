@@ -1,10 +1,11 @@
 pipeline {
     agent any
-
+    // Define parameters for selecting Terraform action
     parameters {
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Terraform action to perform')
     }
 
+    // Set AWS region environment variable
     environment {
         AWS_DEFAULT_REGION = "us-east-1"
     }
