@@ -5,6 +5,7 @@ pipeline {
         AWS_DEFAULT_REGION = "us-east-1"
     }
 
+    // Define stages
     stages {
 
         stage('Select Action') {
