@@ -4,8 +4,6 @@ A simple project to setup the NAT Gateway using terraform.
 
 We use SSM Endpoints to login to the Private Instance and try to access the internet through the NAT Gateway
 
-Using SSM Endpoints reduces the port exposure
-
 ## Steps to achieve this:
 
 1. Create a VPC
@@ -20,10 +18,6 @@ Using SSM Endpoints reduces the port exposure
 6. Create the security groups
    - One for EC2 instance
    - Another for the SSM Endpoints
-7. Create 3 SSM Endpoints
-   - ssm
-   - ec2messages
-   - ssmmessages
 8. Create an IAM Role, attach the trust entity to establish the trust relationship, add the managed policy named **_AmazonSSMManagedInstanceCore_**, create an instance profile
 9. Finally create the EC2 module for testing the working of the NAT Gateway
 
@@ -70,11 +64,6 @@ This project is organized into two main folders:
       - [outputs.tf](./modules/security_groups/outputs.tf)
       - [README.md](./modules/security_groups/README.md)
       - [variables.tf](./modules/security_groups/variables.tf)
-    - [ssm_endpoints/](./modules/ssm_endpoints/)
-      - [main.tf](./modules/ssm_endpoints/main.tf)
-      - [outputs.tf](./modules/ssm_endpoints/outputs.tf)
-      - [README.md](./modules/ssm_endpoints/README.md)
-      - [variables.tf](./modules/ssm_endpoints/variables.tf)
     - [subnet/](./modules/subnet/)
       - [main.tf](./modules/subnet/main.tf)
       - [outputs.tf](./modules/subnet/outputs.tf)
@@ -141,3 +130,62 @@ This project is organized into two main folders:
      - http://checkip.amazonaws.com - A web service by aws that sends back the public IP of your instance
 
      - The public IP must match with that of the Elastic IP that you have attached to your NAT Gateway
+
+## Using Jenkins for automating the workload:
+
+All the code required to setup the jenkins have been mentioned below:
+
+Check out my other repo: [jenkins-setup](https://github.com/AdithyaBhatGS/jenkins-setup)
+
+### Steps(to automate the deployment of the NAT Gateway):
+
+1. Go to the above repo
+2. Clone the repo
+3. Setup the instance which contains Jenkins
+4. Login using SSM console
+5. Run this:
+   - ```bash
+      cat /var/jenkins_home/secrets/initialAdminPassword
+     ```
+   - Copy the password from the console
+   - Paste it to the Jenkins UI
+   - Install the recommended plugins
+   - Provide the details including username, password etc.
+6. Now go to manage
+   - Go to plugins
+   - Install the plugin **_AWS_CREDENTIALS_**
+7. Now in the manage
+   1. Go to credentials
+   2. Go to global
+   3. Click on add credentials
+   4. Choose the type as secrets file
+   5. Upload the terraform.tfvars file
+   6. Mention the **_ID_** as **_TFVARS_FILE_**
+   7. Click on save
+   8. Go to credentials
+   9. Click on add credentials
+   10. Choose the type as **_AWS Credentials_**
+   11. Add your
+       - **_Access key_**
+       - **_Secrets key_**
+   12. Go to Jenkins home page
+   13. Click on create job
+   14. Choose the **_pipeline job_**
+   15. Mention the description
+   16. Choose the polling as:
+      - Go for **_GitHub Webhook for GitHub SCM polling_**
+   17. Mention the above repo as Source Code for your Jenkinsfile
+   18. Change the brach as **_main_** from **_master_**
+   19. Click on **_Save_**
+8. Add the WebHook
+   - Go to your GitHub account
+   - Go to WebHooks
+   - Click add WebHook
+   - Under Payload URL
+     - http://<ec2-ip>:8080/github-webhook
+   - Chnage the content type to application/json
+   - Under the events choose **_Just the push event_**
+9. Trigger the event
+   - Go to your forked repo
+   - Change some code
+   - Check jenkins for trigger     
