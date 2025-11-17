@@ -31,10 +31,6 @@ Creates the route tables, one each for the public and private subnets
 
 Creates the security groups, one each for SSM endpoints and EC2 located in the private subnet
 
-## SSM Endpoints module
-
-Creates 3 endpoints which are required for using the EC2
-
 ## IAM module
 
 Creates an IAM Role, attaches the trust policy, adds managed SSM policy to the created Role and constructs an Instance profile
