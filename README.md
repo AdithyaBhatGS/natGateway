@@ -2,7 +2,7 @@
 
 A simple project to setup the NAT Gateway using terraform.
 
-We use SSM Endpoints to login to the Private Instance and try to access the internet through the NAT Gateway
+We use SSM to login to the Private Instance and try to access the internet through the NAT Gateway
 
 ## Steps to achieve this:
 
